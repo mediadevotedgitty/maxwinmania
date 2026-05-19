@@ -134,7 +134,7 @@ export const countryPage = defineType({
       title: 'country',
       subtitle: 'region',
     },
-    prepare({ title, subtitle }: { title: string; subtitle: string }) {
+    prepare(selection: Record<string, string>) {
       const regionLabels: Record<string, string> = {
         europe: 'Europe',
         'north-america': 'North America',
@@ -144,8 +144,8 @@ export const countryPage = defineType({
         africa: 'Africa',
       }
       return {
-        title,
-        subtitle: regionLabels[subtitle] ?? subtitle,
+        title: selection.title,
+        subtitle: regionLabels[selection.subtitle] ?? selection.subtitle,
       }
     },
   },
