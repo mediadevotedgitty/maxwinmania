@@ -19,7 +19,11 @@ export const countryPageBySlugQuery = groq`
     _id,
     title,
     country,
+    language,
     "slug": slug.current,
+    popupEnabled,
+    popupTitle,
+    popupSubtitle,
     casinos[] {
       _key,
       name,

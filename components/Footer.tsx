@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import LegalButtons from './LegalButtons'
 
 export default function Footer() {
   return (
@@ -22,6 +23,8 @@ export default function Footer() {
             </a>.
           </p>
         </div>
+
+        <LegalButtons />
 
         <p className="footer-copy">
           © {new Date().getFullYear()} MaxWinMania. All rights reserved.

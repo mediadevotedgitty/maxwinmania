@@ -1,3 +1,5 @@
+import { Translation } from '@/lib/translations'
+
 type Casino = {
   _key: string
   name: string
@@ -34,11 +36,11 @@ function StarRating({ rating }: { rating: number }) {
   )
 }
 
-export default function ComparisonTable({ casinos }: { casinos: Casino[] }) {
+export default function ComparisonTable({ casinos, t }: { casinos: Casino[], t: Translation }) {
   if (!casinos.length) {
     return (
       <p style={{ color: 'var(--text-muted)', marginTop: '24px' }}>
-        No casinos listed yet.
+        {t.noCasinos}
       </p>
     )
   }
@@ -46,10 +48,10 @@ export default function ComparisonTable({ casinos }: { casinos: Casino[] }) {
   return (
     <div>
       <div className="table-header">
-        <span>Casino</span>
-        <span>Rating</span>
-        <span>Min. Deposit</span>
-        <span>Bonus</span>
+        <span>{t.tableHeaders.casino}</span>
+        <span>{t.tableHeaders.rating}</span>
+        <span>{t.tableHeaders.minDeposit}</span>
+        <span>{t.tableHeaders.bonus}</span>
         <span></span>
       </div>
 
@@ -79,8 +81,8 @@ export default function ComparisonTable({ casinos }: { casinos: Casino[] }) {
               </div>
 
               {/* Rating */}
-              <div className="casino-field">
-                <span className="casino-field-label">Rating</span>
+              <div className="casino-field casino-field-rating">
+                <span className="casino-field-label">{t.tableHeaders.rating}</span>
                 {casino.rating ? (
                   <StarRating rating={casino.rating} />
                 ) : (
@@ -89,16 +91,16 @@ export default function ComparisonTable({ casinos }: { casinos: Casino[] }) {
               </div>
 
               {/* Min deposit */}
-              <div className="casino-field">
-                <span className="casino-field-label">Min. Deposit</span>
+              <div className="casino-field casino-field-deposit">
+                <span className="casino-field-label">{t.tableHeaders.minDeposit}</span>
                 <span className="casino-field-value">
                   {casino.minimumDeposit ?? '—'}
                 </span>
               </div>
 
               {/* Bonus */}
-              <div className="casino-field">
-                <span className="casino-field-label">Bonus</span>
+              <div className="casino-field casino-field-bonus">
+                <span className="casino-field-label">{t.tableHeaders.bonus}</span>
                 <span className="casino-field-value casino-bonus-value">
                   {casino.bonus ?? '—'}
                 </span>
@@ -113,18 +115,18 @@ export default function ComparisonTable({ casinos }: { casinos: Casino[] }) {
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                   >
-                    Visit Casino
+                    {t.visitCasino}
                   </a>
                 ) : (
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-                    No link
+                    {t.noLink}
                   </span>
                 )}
               </div>
 
               {/* Disclaimer */}
               <div className="casino-disclaimer">
-                18+ | New customers only. T&amp;Cs apply. Play responsibly. BeGambleAware.org
+                {t.disclaimer}
               </div>
             </div>
           )
