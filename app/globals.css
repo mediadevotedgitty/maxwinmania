@@ -413,18 +413,19 @@ body::before {
 }
 
 .legal-modal-content {
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  line-height: 1.8;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.925rem;
+  line-height: 1.9;
 }
 
 .legal-modal-content h3 {
-  color: #fff;
+  color: var(--neon);
   font-family: var(--font-head);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 12px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-top: 28px;
+  letter-spacing: 0.02em;
 }
 
 .legal-modal-content h3:first-child {
@@ -432,7 +433,7 @@ body::before {
 }
 
 .legal-modal-content p {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .legal-modal-content strong {
@@ -454,11 +455,16 @@ body::before {
   gap: 6px;
 }
 
+.legal-modal-content ul li {
+  color: rgba(255,255,255,0.7);
+  padding-left: 4px;
+}
+
 .legal-modal-content ul li::before {
   content: '›';
   color: var(--neon);
   font-weight: 700;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 @media (max-width: 640px) {
@@ -1039,7 +1045,7 @@ body::before {
   /* ── Casino card ── */
   .casino-row {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     padding: 20px 16px 14px;
     gap: 0;
   }
@@ -1052,52 +1058,70 @@ body::before {
     font-size: 0.8rem;
   }
 
-  /* Row 1: logo + rating side by side */
+  /* Logo — full width */
   .casino-logo-wrap {
     width: 100%;
     height: 60px;
     margin-bottom: 14px;
   }
 
-  /* Rating row */
+  /* Rating — left half */
   .casino-field-rating {
-    margin-bottom: 10px;
+    width: 50%;
+    padding-right: 8px;
+    margin-bottom: 12px;
   }
 
-  /* Bonus — big and prominent */
-  .casino-field-bonus {
-    background: rgba(0,255,135,0.04);
-    border: 1px solid rgba(0,255,135,0.1);
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-bottom: 10px;
-  }
-
-  .casino-field-bonus .casino-bonus-value {
-    font-size: 1.1rem;
-  }
-
-  /* Min deposit — compact row */
+  /* Min deposit — right half */
   .casino-field-deposit {
+    width: 50%;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.03);
-    border-radius: 6px;
-    padding: 8px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: none;
+    border-radius: 0;
+    padding: 0;
     margin-bottom: 12px;
   }
 
   .casino-field-deposit .casino-field-label {
-    margin: 0;
+    margin: 0 0 4px 0;
   }
 
   .casino-field-deposit .casino-field-value {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
   }
 
-  /* CTA full width */
+  /* Bonus — full width, centered, bigger */
+  .casino-field-bonus {
+    width: 100%;
+    background: rgba(0,255,135,0.04);
+    border: 1px solid rgba(0,255,135,0.1);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .casino-field-bonus .casino-field-label {
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .casino-field-bonus .casino-bonus-value {
+    font-size: 1.25rem;
+    text-align: center;
+    display: block;
+  }
+
+  /* CTA — full width */
+  .casino-row > div:has(.cta-btn) {
+    width: 100%;
+  }
+
   .cta-btn {
     display: block;
     width: 100%;
@@ -1115,24 +1139,19 @@ body::before {
 
   /* ── Popup ── */
   .popup {
-    width: 94%;
+    width: 88%;
     max-width: none;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: 0;
-    transform: none;
-    border-radius: 16px 16px 0 0;
-    animation: popupSlideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
-  }
-
-  @keyframes popupSlideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+    animation: popupIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .popup-body {
-    padding: 24px 20px 32px;
+    padding: 24px 20px 28px;
   }
 
   .popup-title {
