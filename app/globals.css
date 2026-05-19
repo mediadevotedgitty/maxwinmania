@@ -1,0 +1,658 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:          #131920;
+  --bg-card:     #1a2230;
+  --bg-card-2:   #1f2a3a;
+  --neon:        #00ff87;
+  --neon-dim:    rgba(0, 255, 135, 0.15);
+  --neon-glow:   0 0 12px rgba(0,255,135,0.6), 0 0 30px rgba(0,255,135,0.2);
+  --neon-glow-sm:0 0 6px rgba(0,255,135,0.5);
+  --text:        #e8eaf0;
+  --text-muted:  #5a6478;
+  --border:      rgba(255,255,255,0.05);
+  --border-neon: rgba(0,255,135,0.3);
+  --radius:      10px;
+  --font-head:   'Figtree', sans-serif;
+  --font-body:   'Figtree', sans-serif;
+}
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ── Scanline texture overlay ─────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(19, 25, 32, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 48px 24px;
+  margin-top: 80px;
+}
+
+.site-footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}
+
+.footer-logo img {
+  height: 48px;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.footer-logo:hover img {
+  opacity: 1;
+}
+
+.footer-disclaimer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  max-width: 720px;
+}
+
+.footer-disclaimer strong {
+  color: var(--text);
+}
+
+.footer-disclaimer a {
+  color: var(--neon);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-disclaimer a:hover {
+  opacity: 0.8;
+}
+
+.footer-copy {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* ── Homepage ─────────────────────────────────────────────── */
+
+.home {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(0,255,135,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(0,180,255,0.05) 0%, transparent 50%),
+    var(--bg);
+  overflow: hidden;
+}
+
+/* Animated corner accents */
+.home::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0.6;
+}
+
+.home-title {
+  position: relative;
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(0,255,135,0.2);
+}
+
+.home-title span {
+  color: var(--neon);
+  text-shadow: var(--neon-glow);
+}
+
+/* ── Country Picker ───────────────────────────────────────── */
+
+.picker {
+  position: relative;
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.region-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.region-label {
+  font-family: var(--font-head);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--neon);
+  text-shadow: var(--neon-glow-sm);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  justify-content: center;
+}
+
+.region-label::before,
+.region-label::after {
+  content: '';
+  flex: 1;
+  max-width: 140px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-neon));
+}
+.region-label::after {
+  background: linear-gradient(270deg, transparent, var(--border-neon));
+}
+
+.country-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 24px;
+}
+
+.country-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.country-link:hover {
+  transform: translateY(-4px);
+}
+
+.country-link:hover .country-flag,
+.country-link:hover .country-flag-placeholder {
+  border-color: var(--neon);
+  box-shadow: 0 0 12px rgba(0,255,135,0.4), 0 4px 16px rgba(0,0,0,0.5);
+}
+
+.country-link:hover .country-name {
+  color: var(--neon);
+}
+
+.country-flag {
+  width: 72px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.country-flag-placeholder {
+  width: 72px;
+  height: 50px;
+  border-radius: 6px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.country-name {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 80px;
+  line-height: 1.3;
+  transition: color 0.2s;
+}
+
+/* ── Country Page ─────────────────────────────────────────── */
+
+.country-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 48px 24px 80px;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(0,255,135,0.04) 0%, transparent 50%),
+    var(--bg);
+}
+
+.country-page::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0.5;
+}
+
+.country-page-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  transition: color 0.15s;
+}
+
+.back-link:hover { color: var(--neon); }
+
+.page-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 40px;
+}
+
+/* ── Comparison Table ─────────────────────────────────────── */
+
+.table-header {
+  display: grid;
+  grid-template-columns: 180px 130px 0.6fr 1.4fr 180px;
+  gap: 28px;
+  padding: 0 28px 12px;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.table-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 20px;
+}
+
+/* ── Casino Card ──────────────────────────────────────────── */
+
+.casino-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 180px 130px 0.6fr 1.4fr 180px;
+  align-items: center;
+  column-gap: 28px;
+  row-gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 28px 12px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+/* ── Rank badge ───────────────────────────────────────────── */
+
+.casino-rank-badge {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--bg-card-2);
+  border: 2px solid var(--neon);
+  box-shadow: 0 0 10px rgba(0,255,135,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--neon);
+  z-index: 2;
+}
+
+.casino-row[data-rank="1"] .casino-rank-badge {
+  border-color: #ffd232;
+  box-shadow: 0 0 10px rgba(255,210,50,0.5);
+  color: #ffd232;
+}
+
+.casino-row[data-rank="2"] .casino-rank-badge {
+  border-color: #b4bec8;
+  box-shadow: none;
+  color: #b4bec8;
+}
+
+.casino-row[data-rank="3"] .casino-rank-badge {
+  border-color: #cd7f32;
+  box-shadow: none;
+  color: #cd7f32;
+}
+
+/* Left neon accent bar */
+.casino-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--neon);
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: var(--neon-glow);
+}
+
+.casino-row:hover {
+  border-color: var(--border-neon);
+  box-shadow: 0 0 0 1px var(--border-neon), 0 4px 24px rgba(0,0,0,0.4);
+  transform: translateX(2px);
+}
+
+.casino-row:hover::before {
+  opacity: 1;
+}
+
+/* Top 3 get a gold/silver/bronze rank tint */
+.casino-row[data-rank="1"] { border-color: rgba(255, 210, 50, 0.6); box-shadow: 0 0 16px rgba(255,210,50,0.15); }
+.casino-row[data-rank="1"]:hover { border-color: rgba(255, 210, 50, 0.9); }
+.casino-row[data-rank="1"]::before { background: #ffd232; box-shadow: 0 0 12px rgba(255,210,50,0.6); }
+
+.casino-row[data-rank="2"] { border-color: rgba(180, 190, 200, 0.55); box-shadow: 0 0 16px rgba(180,190,200,0.1); }
+.casino-row[data-rank="2"]:hover { border-color: rgba(180, 190, 200, 0.85); }
+.casino-row[data-rank="2"]::before { background: #b4bec8; }
+
+.casino-row[data-rank="3"] { border-color: rgba(205, 127, 50, 0.55); box-shadow: 0 0 16px rgba(205,127,50,0.1); }
+.casino-row[data-rank="3"]:hover { border-color: rgba(205, 127, 50, 0.85); }
+.casino-row[data-rank="3"]::before { background: #cd7f32; }
+
+/* ── Rank number ─────────────────────────────────────────── */
+
+.casino-rank {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1;
+}
+
+.casino-row[data-rank="1"] .casino-rank { color: #ffd232; text-shadow: 0 0 8px rgba(255,210,50,0.5); }
+.casino-row[data-rank="2"] .casino-rank { color: #b4bec8; }
+.casino-row[data-rank="3"] .casino-rank { color: #cd7f32; }
+
+/* ── Logo ────────────────────────────────────────────────── */
+
+.casino-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  height: 72px;
+}
+
+.casino-logo {
+  max-width: 140px;
+  max-height: 52px;
+  object-fit: contain;
+}
+
+.casino-logo-placeholder {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 8px;
+}
+
+/* ── Fields ──────────────────────────────────────────────── */
+
+.casino-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.casino-field-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.55);
+}
+
+.casino-field-value {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ── Casino disclaimer ───────────────────────────────────── */
+
+.casino-disclaimer {
+  grid-column: 1 / -1;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.4);
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+/* ── Stars ───────────────────────────────────────────────── */
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin-top: 2px;
+}
+
+.star {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.star-full  { color: var(--neon); text-shadow: 0 0 6px rgba(0,255,135,0.6); }
+.star-empty { color: rgba(255,255,255,0.15); }
+
+/* Half star — empty base with neon fill clipped to 50% */
+.star-half-wrap {
+  position: relative;
+  display: inline-block;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.star-half-empty {
+  color: rgba(255,255,255,0.15);
+}
+
+.star-half-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  color: var(--neon);
+  text-shadow: 0 0 6px rgba(0,255,135,0.6);
+}
+
+.star-value {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.casino-bonus-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* ── CTA Button ──────────────────────────────────────────── */
+
+.cta-btn {
+  display: block;
+  background: var(--neon);
+  color: #050a08;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 7px;
+  text-align: center;
+  white-space: nowrap;
+  transition: box-shadow 0.2s, transform 0.1s, background 0.2s;
+  box-shadow: 0 0 16px rgba(0,255,135,0.3);
+}
+
+.cta-btn:hover {
+  background: #20ffa0;
+  box-shadow: var(--neon-glow);
+  transform: translateY(-2px);
+}
+
+.cta-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 700px) {
+  .casino-row {
+    grid-template-columns: 32px 1fr 120px;
+    grid-template-rows: auto auto auto;
+    gap: 12px;
+  }
+
+  .casino-logo-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-start;
+    background: none;
+    border: none;
+    padding: 0;
+    height: auto;
+  }
+
+  .casino-field:first-of-type {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .casino-field:last-of-type {
+    grid-column: 2 / -1;
+    grid-row: 3;
+  }
+
+  .cta-btn {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: 0.78rem;
+    padding: 10px 12px;
+  }
+
+  .table-header { display: none; }
+}
