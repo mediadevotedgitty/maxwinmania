@@ -67,6 +67,8 @@ export const countryPage = defineType({
           { title: 'Danish (Dansk)', value: 'da' },
           { title: 'Swedish (Svenska)', value: 'sv' },
           { title: 'Dutch (Nederlands)', value: 'nl' },
+          { title: 'Italian (Italiano)', value: 'it' },
+          { title: 'Polish (Polski)', value: 'pl' },
         ],
         layout: 'dropdown',
       },

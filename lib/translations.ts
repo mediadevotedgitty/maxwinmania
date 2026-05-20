@@ -208,6 +208,58 @@ const translations: Record<string, Translation> = {
       africa: 'Afrika',
     },
   },
+
+  it: {
+    chooseCountry: 'Scegli Il Tuo Paese',
+    allCountries: '← Tutti i Paesi',
+    casinosRanked: (n) => `${n} casino recensit${n === 1 ? 'o' : 'i'} e classificat${n === 1 ? 'o' : 'i'}`,
+    tableHeaders: {
+      casino: 'Casino',
+      rating: 'Valutazione',
+      minDeposit: 'Dep. Minimo',
+      bonus: 'Bonus',
+    },
+    visitCasino: 'Visita il Casino',
+    noLink: 'Nessun link',
+    noCasinos: 'Nessun casino ancora elencato.',
+    disclaimer: '18+ | Solo nuovi clienti. Si applicano termini e condizioni. Gioca responsabilmente.',
+    footerDisclaimer: '18+ | Gioca responsabilmente. MaxWinMania è un sito di confronto casino indipendente. Non gestiamo servizi di gioco d\'azzardo. Le offerte e i bonus dei casino sono soggetti a modifiche — verifica sempre il sito dell\'operatore per i termini aggiornati. Il gioco può creare dipendenza. Gioca responsabilmente e scommetti solo ciò che puoi permetterti di perdere.',
+    footerDisclaimer2: (url) => `Se tu o qualcuno che conosci ha un problema con il gioco d'azzardo, puoi trovare aiuto su ${url}.`,
+    regions: {
+      europe: 'Europa',
+      'north-america': 'Nord America',
+      'south-america': 'Sud America',
+      asia: 'Asia',
+      oceania: 'Oceania',
+      africa: 'Africa',
+    },
+  },
+
+  pl: {
+    chooseCountry: 'Wybierz Swój Kraj',
+    allCountries: '← Wszystkie Kraje',
+    casinosRanked: (n) => `${n} kasyno${n === 1 ? '' : n < 5 ? 'a' : 'w'} ocenion${n === 1 ? 'e' : 'ych'} i sklasyfikowan${n === 1 ? 'e' : 'ych'}`,
+    tableHeaders: {
+      casino: 'Kasyno',
+      rating: 'Ocena',
+      minDeposit: 'Min. Depozyt',
+      bonus: 'Bonus',
+    },
+    visitCasino: 'Odwiedź Kasyno',
+    noLink: 'Brak linku',
+    noCasinos: 'Brak kasyn na liście.',
+    disclaimer: '18+ | Tylko nowi klienci. Obowiązują regulamin i warunki. Graj odpowiedzialnie.',
+    footerDisclaimer: '18+ | Graj odpowiedzialnie. MaxWinMania to niezależna strona porównująca kasyna. Nie prowadzimy żadnych usług hazardowych. Oferty i bonusy kasyn mogą ulec zmianie — zawsze sprawdzaj stronę operatora w celu uzyskania aktualnych warunków. Hazard może uzależniać. Graj odpowiedzialnie i stawiaj tylko tyle, na ile możesz sobie pozwolić.',
+    footerDisclaimer2: (url) => `Jeśli Ty lub ktoś, kogo znasz, ma problem z hazardem, pomoc jest dostępna na ${url}.`,
+    regions: {
+      europe: 'Europa',
+      'north-america': 'Ameryka Północna',
+      'south-america': 'Ameryka Południowa',
+      asia: 'Azja',
+      oceania: 'Oceania',
+      africa: 'Afryka',
+    },
+  },
 }
 
 export function getTranslation(locale?: string): Translation {
