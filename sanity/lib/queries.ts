@@ -44,3 +44,26 @@ export const allSlugsQuery = groq`
     "slug": slug.current
   }
 `
+
+// Fetches a single landing page by slug
+export const landingPageBySlugQuery = groq`
+  *[_type == "landingPage" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    bonus,
+    wager,
+    ctaLink,
+    ctaLabel,
+    logo {
+      asset->{ url }
+    }
+  }
+`
+
+// Fetches all landing page slugs — used by Next.js to pre-render
+export const allLandingPageSlugsQuery = groq`
+  *[_type == "landingPage" && defined(slug.current)] {
+    "slug": slug.current
+  }
+`
