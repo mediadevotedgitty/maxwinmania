@@ -10,11 +10,13 @@ type PopupProps = {
 export default function Popup({ title, subtitle }: PopupProps) {
   const [visible, setVisible] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
-    // Don't show if already dismissed this session
     if (sessionStorage.getItem('popup-dismissed')) return
-
     const timer = setTimeout(() => setVisible(true), 2000)
     return () => clearTimeout(timer)
   }, [])
@@ -24,10 +26,31 @@ export default function Popup({ title, subtitle }: PopupProps) {
     sessionStorage.setItem('popup-dismissed', '1')
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setSubmitted(true)
-    // ESP integration goes here later
+    setLoading(true)
+    setError('')
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name: firstName }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        setSubmitted(true)
+        sessionStorage.setItem('popup-dismissed', '1')
+      } else {
+        setError(data.message || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (!visible) return null
@@ -49,18 +72,25 @@ export default function Popup({ title, subtitle }: PopupProps) {
                 <input
                   type="text"
                   placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   required
+                  disabled={loading}
                   className="popup-input"
                 />
                 <input
                   type="email"
                   placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={loading}
                   className="popup-input"
                 />
-                <button type="submit" className="popup-btn">
-                  Join Now
+                <button type="submit" disabled={loading} className="popup-btn">
+                  {loading ? 'Joining…' : 'Join Now'}
                 </button>
+                {error && <p className="popup-error">{error}</p>}
               </form>
 
               <p className="popup-legal">

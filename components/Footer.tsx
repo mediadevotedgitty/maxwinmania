@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import LegalButtons from './LegalButtons'
+import NewsletterForm from './NewsletterForm'
 
 export default function Footer() {
   return (
@@ -23,6 +24,8 @@ export default function Footer() {
             </a>.
           </p>
         </div>
+
+        <NewsletterForm />
 
         <LegalButtons />
 
