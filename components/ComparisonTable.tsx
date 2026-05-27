@@ -111,7 +111,7 @@ export default function ComparisonTable({ casinos, t }: { casinos: Casino[], t: 
                 {casino.ctaLink ? (
                   <a
                     href={casino.ctaLink}
-                    className="cta-btn"
+                    className="cta-btn go-final"
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                   >

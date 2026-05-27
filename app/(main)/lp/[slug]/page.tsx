@@ -53,7 +53,7 @@ export default async function LandingPage({ params }: { params: { slug: string }
             href={page.ctaLink}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="lp-cta"
+            className="lp-cta go-final"
           >
             {page.ctaLabel || 'Claim Offer'}
           </a>
