@@ -24,8 +24,8 @@ export const countryPageBySlugQuery = groq`
     popupEnabled,
     popupTitle,
     popupSubtitle,
-    casinos[] {
-      _key,
+    casinos[]-> {
+      _id,
       name,
       minimumDeposit,
       bonus,

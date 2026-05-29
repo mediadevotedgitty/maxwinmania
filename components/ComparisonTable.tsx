@@ -1,7 +1,7 @@
 import { Translation } from '@/lib/translations'
 
 type Casino = {
-  _key: string
+  _id: string
   name: string
   minimumDeposit?: string
   bonus?: string
@@ -60,7 +60,7 @@ export default function ComparisonTable({ casinos, t }: { casinos: Casino[], t: 
           const rank = index + 1
           return (
             <div
-              key={casino._key}
+              key={casino._id}
               className="casino-row"
               data-rank={rank <= 3 ? rank : undefined}
             >

@@ -23,6 +23,18 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // Casino library — create once, reuse across country pages
+      S.listItem()
+        .title('Casinos')
+        .schemaType('casino')
+        .child(
+          S.documentTypeList('casino')
+            .title('All Casinos')
+            .defaultOrdering([{ field: 'name', direction: 'asc' }])
+        ),
+
+      S.divider(),
+
       // All country pages — create new ones here
       S.listItem()
         .title('Country Pages')

@@ -43,6 +43,7 @@ export default function Popup({ title, subtitle }: PopupProps) {
       if (res.ok) {
         setSubmitted(true)
         sessionStorage.setItem('popup-dismissed', '1')
+        setTimeout(dismiss, 2500)
       } else {
         setError(data.message || 'Something went wrong. Please try again.')
       }
