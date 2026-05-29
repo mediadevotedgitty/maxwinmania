@@ -24,7 +24,7 @@ export const countryPageBySlugQuery = groq`
     popupEnabled,
     popupTitle,
     popupSubtitle,
-    casinos[]-> {
+    "casinos": casinos[defined(@->)]-> {
       _id,
       name,
       minimumDeposit,

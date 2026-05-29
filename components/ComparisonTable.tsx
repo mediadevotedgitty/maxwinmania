@@ -56,7 +56,7 @@ export default function ComparisonTable({ casinos, t }: { casinos: Casino[], t: 
       </div>
 
       <div className="table-wrap">
-        {casinos.map((casino, index) => {
+        {casinos.filter(Boolean).map((casino, index) => {
           const rank = index + 1
           return (
             <div
