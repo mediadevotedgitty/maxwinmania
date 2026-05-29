@@ -12,6 +12,14 @@ export const casino = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'country',
+      title: 'Country',
+      type: 'reference',
+      to: [{ type: 'countryPage' }],
+      description: 'Which country page this casino belongs to',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'logo',
       title: 'Logo',
       type: 'image',
@@ -54,7 +62,7 @@ export const casino = defineType({
   preview: {
     select: {
       title: 'name',
-      subtitle: 'bonus',
+      subtitle: 'country.country',
       media: 'logo',
     },
   },

@@ -113,6 +113,15 @@ export const countryPage = defineType({
         defineArrayMember({
           type: 'reference',
           to: [{ type: 'casino' }],
+          options: {
+            filter: ({ document }: { document: { _id?: string } }) => {
+              const id = (document._id ?? '').replace(/^drafts\./, '')
+              return {
+                filter: 'country._ref == $id',
+                params: { id },
+              }
+            },
+          },
         }),
       ],
     }),
