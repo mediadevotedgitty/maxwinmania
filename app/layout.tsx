@@ -25,10 +25,21 @@ export default function RootLayout({
             }
             var dom = getURLParameter('dom');
             if (!dom) return;
-            var link = 'https://' + dom + '/click/1';
             function applyGoFinal() {
               document.querySelectorAll('.go-final').forEach(function (el) {
-                el.setAttribute('href', link);
+                var original = el.getAttribute('href');
+                if (!original) return;
+                // Replace {trackingdomain} placeholder directly
+                if (original.indexOf('{trackingdomain}') !== -1) {
+                  el.setAttribute('href', original.replace('{trackingdomain}', dom));
+                  return;
+                }
+                // Otherwise swap the hostname of a real URL
+                try {
+                  var parsed = new URL(original);
+                  parsed.hostname = dom;
+                  el.setAttribute('href', parsed.toString());
+                } catch (e) {}
               });
             }
             applyGoFinal();
