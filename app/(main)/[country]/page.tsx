@@ -57,7 +57,12 @@ export default async function CountryPage({
       </div>
 
       {page.popupEnabled && page.popupTitle && (
-        <Popup title={page.popupTitle} subtitle={page.popupSubtitle} />
+        <Popup
+          title={page.popupTitle}
+          subtitle={page.popupSubtitle}
+          listId={page.mailjetListId}
+          t={t}
+        />
       )}
     </main>
   )

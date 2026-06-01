@@ -1,13 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type { Translation } from '@/lib/translations'
 
 type PopupProps = {
   title: string
   subtitle?: string
+  listId?: number
+  t: Translation
 }
 
-export default function Popup({ title, subtitle }: PopupProps) {
+export default function Popup({ title, subtitle, listId, t }: PopupProps) {
   const [visible, setVisible] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -35,7 +38,7 @@ export default function Popup({ title, subtitle }: PopupProps) {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name: firstName }),
+        body: JSON.stringify({ email, name: firstName, listId }),
       })
 
       const data = await res.json()
@@ -72,7 +75,7 @@ export default function Popup({ title, subtitle }: PopupProps) {
               <form className="popup-form" onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  placeholder="First Name"
+                  placeholder={t.popup.firstName}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
@@ -81,7 +84,7 @@ export default function Popup({ title, subtitle }: PopupProps) {
                 />
                 <input
                   type="email"
-                  placeholder="Email Address"
+                  placeholder={t.popup.email}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -89,13 +92,13 @@ export default function Popup({ title, subtitle }: PopupProps) {
                   className="popup-input"
                 />
                 <button type="submit" disabled={loading} className="popup-btn">
-                  {loading ? 'Joining…' : 'Join Now'}
+                  {loading ? '…' : t.popup.joinNow}
                 </button>
                 {error && <p className="popup-error">{error}</p>}
               </form>
 
               <p className="popup-legal">
-                By signing up you agree to receive promotional emails. Unsubscribe anytime.
+                {t.popup.legal}
               </p>
             </>
           ) : (

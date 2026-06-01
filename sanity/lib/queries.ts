@@ -24,6 +24,7 @@ export const countryPageBySlugQuery = groq`
     popupEnabled,
     popupTitle,
     popupSubtitle,
+    mailjetListId,
     "casinos": casinos[defined(@->)]-> {
       _id,
       name,

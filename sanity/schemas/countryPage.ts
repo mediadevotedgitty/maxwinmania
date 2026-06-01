@@ -70,6 +70,7 @@ export const countryPage = defineType({
           { title: 'Dutch (Nederlands)', value: 'nl' },
           { title: 'Italian (Italiano)', value: 'it' },
           { title: 'Polish (Polski)', value: 'pl' },
+          { title: 'Turkish (Türkçe)', value: 'tr' },
         ],
         layout: 'dropdown',
       },
@@ -89,6 +90,13 @@ export const countryPage = defineType({
       type: 'boolean',
       description: 'Show a signup popup on this country page',
       initialValue: false,
+    }),
+    defineField({
+      name: 'mailjetListId',
+      title: 'Mailjet List ID',
+      type: 'number',
+      description: 'The Mailjet contact list ID for this country\'s popup signups. Overrides the default list.',
+      hidden: ({ document }) => !document?.popupEnabled,
     }),
     defineField({
       name: 'popupTitle',

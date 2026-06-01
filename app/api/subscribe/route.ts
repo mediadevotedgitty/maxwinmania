@@ -8,14 +8,15 @@ function mjAuth() {
 }
 
 export async function POST(req: NextRequest) {
-  const { email, name } = await req.json()
+  const { email, name, listId: bodyListId } = await req.json()
 
   // Basic email validation
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ message: 'Invalid email address.' }, { status: 400 })
   }
 
-  const listId = process.env.MJ_CONTACT_LIST_ID
+  // Use per-country list ID if provided, otherwise fall back to default
+  const listId = bodyListId ?? process.env.MJ_CONTACT_LIST_ID
   const headers = {
     'Content-Type': 'application/json',
     Authorization: mjAuth(),

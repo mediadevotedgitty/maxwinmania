@@ -73,7 +73,7 @@ body::before {
 }
 
 .site-logo img {
-  height: 48px;
+  height: 32px;
   width: auto;
   display: block;
 }
@@ -940,13 +940,13 @@ body::before {
   color: #050a08;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 14px 28px;
+  padding: 14px 20px;
   border-radius: 7px;
   text-align: center;
-  white-space: nowrap;
+  word-break: break-word;
   transition: box-shadow 0.2s, transform 0.1s, background 0.2s;
   box-shadow: 0 0 16px rgba(0,255,135,0.3);
 }
@@ -1123,7 +1123,7 @@ body::before {
   }
 
   .site-logo img {
-    height: 36px;
+    height: 24px;
   }
 
   /* ── Homepage ── */
