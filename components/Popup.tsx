@@ -1,16 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import type { Translation } from '@/lib/translations'
+type PopupStrings = {
+  firstName: string
+  email: string
+  joinNow: string
+  legal: string
+}
 
 type PopupProps = {
   title: string
   subtitle?: string
   listId?: number
-  t: Translation
+  popupStrings: PopupStrings
 }
 
-export default function Popup({ title, subtitle, listId, t }: PopupProps) {
+export default function Popup({ title, subtitle, listId, popupStrings }: PopupProps) {
   const [visible, setVisible] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -75,7 +80,7 @@ export default function Popup({ title, subtitle, listId, t }: PopupProps) {
               <form className="popup-form" onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  placeholder={t.popup.firstName}
+                  placeholder={popupStrings.firstName}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
@@ -84,7 +89,7 @@ export default function Popup({ title, subtitle, listId, t }: PopupProps) {
                 />
                 <input
                   type="email"
-                  placeholder={t.popup.email}
+                  placeholder={popupStrings.email}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -92,13 +97,13 @@ export default function Popup({ title, subtitle, listId, t }: PopupProps) {
                   className="popup-input"
                 />
                 <button type="submit" disabled={loading} className="popup-btn">
-                  {loading ? '…' : t.popup.joinNow}
+                  {loading ? '…' : popupStrings.joinNow}
                 </button>
                 {error && <p className="popup-error">{error}</p>}
               </form>
 
               <p className="popup-legal">
-                {t.popup.legal}
+                {popupStrings.legal}
               </p>
             </>
           ) : (

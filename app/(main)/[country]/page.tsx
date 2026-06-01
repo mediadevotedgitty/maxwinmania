@@ -61,7 +61,7 @@ export default async function CountryPage({
           title={page.popupTitle}
           subtitle={page.popupSubtitle}
           listId={page.mailjetListId}
-          t={t}
+          popupStrings={t.popup}
         />
       )}
     </main>
