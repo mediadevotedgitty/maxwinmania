@@ -320,7 +320,6 @@ const translations: Record<string, Translation> = {
       africa: 'Afryka',
     },
   },
-}
 
   tr: {
     chooseCountry: 'Ülkenizi Seçin',
