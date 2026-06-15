@@ -60,7 +60,7 @@ export default async function CountryPage({
         <Popup
           title={page.popupTitle}
           subtitle={page.popupSubtitle}
-          listId={page.mailjetListId}
+          listId={page.inboxroadListId}
           popupStrings={t.popup}
         />
       )}

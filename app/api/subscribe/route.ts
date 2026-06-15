@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
-  const { email, name } = await req.json()
+  const { email, name, listId: bodyListId } = await req.json()
 
   // Basic email validation
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -9,7 +9,8 @@ export async function POST(req: NextRequest) {
   }
 
   const apiKey = process.env.INBOXROAD_API_KEY
-  const listId = process.env.INBOXROAD_LIST_ID
+  // Use per-country list ID from Sanity if set, otherwise fall back to env var default
+  const listId = bodyListId ?? process.env.INBOXROAD_LIST_ID
 
   if (!apiKey || !listId) {
     console.error('Missing INBOXROAD_API_KEY or INBOXROAD_LIST_ID env vars')

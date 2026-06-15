@@ -11,7 +11,7 @@ type PopupStrings = {
 type PopupProps = {
   title: string
   subtitle?: string
-  listId?: number
+  listId?: string
   popupStrings: PopupStrings
 }
 

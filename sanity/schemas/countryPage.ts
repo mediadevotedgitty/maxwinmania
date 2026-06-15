@@ -92,10 +92,10 @@ export const countryPage = defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'mailjetListId',
-      title: 'Mailjet List ID',
-      type: 'number',
-      description: 'The Mailjet contact list ID for this country\'s popup signups. Overrides the default list.',
+      name: 'inboxroadListId',
+      title: 'InboxRoad List ID',
+      type: 'string',
+      description: 'The InboxRoad contact list UUID for this country\'s popup signups. Overrides the default list.',
       hidden: ({ document }) => !document?.popupEnabled,
     }),
     defineField({
