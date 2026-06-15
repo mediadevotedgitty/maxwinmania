@@ -1,63 +1,56 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-const MJ_API_BASE = 'https://api.mailjet.com/v3/REST'
-
-function mjAuth() {
-  const creds = `${process.env.MJ_APIKEY_PUBLIC}:${process.env.MJ_APIKEY_PRIVATE}`
-  return 'Basic ' + Buffer.from(creds).toString('base64')
-}
-
 export async function POST(req: NextRequest) {
-  const { email, name, listId: bodyListId } = await req.json()
+  const { email, name } = await req.json()
 
   // Basic email validation
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ message: 'Invalid email address.' }, { status: 400 })
   }
 
-  // Use per-country list ID if provided, otherwise fall back to default
-  const listId = bodyListId ?? process.env.MJ_CONTACT_LIST_ID
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: mjAuth(),
+  const apiKey = process.env.INBOXROAD_API_KEY
+  const listId = process.env.INBOXROAD_LIST_ID
+
+  if (!apiKey || !listId) {
+    console.error('Missing INBOXROAD_API_KEY or INBOXROAD_LIST_ID env vars')
+    return NextResponse.json({ message: 'Server configuration error.' }, { status: 500 })
   }
 
   try {
-    // Step 1: Create or update the contact
-    const contactRes = await fetch(`${MJ_API_BASE}/contact`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ Email: email, Name: name ?? '' }),
-    })
-
-    // 400 with "already exists" is fine — Mailjet returns this for existing contacts
-    if (!contactRes.ok && contactRes.status !== 400) {
-      const err = await contactRes.json()
-      console.error('Mailjet contact error:', err)
-      return NextResponse.json({ message: 'Failed to create contact.' }, { status: 500 })
-    }
-
-    // Step 2: Add to contact list
-    const listRes = await fetch(`${MJ_API_BASE}/listrecipient`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        ContactAlt: email,
-        ListID: Number(listId),
-      }),
-    })
-
-    if (!listRes.ok) {
-      const err = await listRes.json()
-      // Code 9 = already subscribed — treat as success
-      const alreadySubscribed = err?.ErrorCode === 'ps-MJ-0013' || err?.StatusCode === 400
-      if (!alreadySubscribed) {
-        console.error('Mailjet list error:', err)
-        return NextResponse.json({ message: 'Failed to subscribe.' }, { status: 500 })
+    const res = await fetch(
+      `https://webapi.inboxroad.com/api/v2/contacts-lists/${listId}/contacts/`,
+      {
+        method: 'POST',
+        headers: {
+          'X-API-Key': apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          first_name: name ?? '',
+          status: 'subscribed',
+        }),
       }
+    )
+
+    if (res.ok) {
+      return NextResponse.json({ message: 'Subscribed successfully.' }, { status: 200 })
     }
 
-    return NextResponse.json({ message: 'Subscribed successfully.' }, { status: 200 })
+    const data = await res.json().catch(() => ({}))
+
+    // 400 can mean the contact already exists — treat as success
+    if (res.status === 400) {
+      const errorText = JSON.stringify(data.errors ?? '')
+      if (errorText.toLowerCase().includes('already exists') || errorText.toLowerCase().includes('duplicate')) {
+        return NextResponse.json({ message: 'Subscribed successfully.' }, { status: 200 })
+      }
+      console.error('InboxRoad 400:', data)
+      return NextResponse.json({ message: 'Invalid data.' }, { status: 400 })
+    }
+
+    console.error('InboxRoad error:', res.status, data)
+    return NextResponse.json({ message: 'Failed to subscribe. Please try again.' }, { status: 500 })
   } catch (err) {
     console.error('Subscribe error:', err)
     return NextResponse.json({ message: 'Server error. Please try again.' }, { status: 500 })
